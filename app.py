@@ -119,7 +119,7 @@
         a = input4
 
         new_equal = ((d + n)/s)**(1/(a-1))
-        print('newequal='+str(new_equal))
+
         
         trace_1 = go.Scatter(x = k[0], y = k[0] ** a,
                         name = 'f(x)',
@@ -162,9 +162,7 @@
             #        marker=dict(color="red", size=10))])
             #    for j in range(101)]
             )
-        print('fig pronta')
-        
-        print(time['idx'])
+
         trace_2 = go.Scatter(x = time.iloc[1:,0], y = time.iloc[1:,3],
                             name = 'gk',
                             line = dict(width = 2,
@@ -181,7 +179,7 @@
             #        mode="lines")])
             #    for j in range(101)]
             )    
-        print('fig2 pronta')
+
 
 
         fig.add_trace(go.Scatter(x=k[0], y=s*(k[0]**a),
