@@ -224,6 +224,7 @@
     
         return fig, fig2
 
+    server = app.server
     
     # Step 6. Add the server clause
     if __name__ == '__main__':
