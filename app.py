@@ -240,7 +240,9 @@ def update_figure(input1,input2,input3,input4):
     )
     
     return fig, fig2
-    
+
+server = app.server  
+  
     # Step 6. Add the server clause
 if __name__ == '__main__':
     app.run_server()
