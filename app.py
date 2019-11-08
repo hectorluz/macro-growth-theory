@@ -29,7 +29,7 @@ trace_1 = go.Scatter(x = k[0], y = k[0] ** a,
                                 color = 'rgb(229, 151, 50)'))
 
 
-layout = go.Layout(title = 'Time Series Plot',
+layout = go.Layout(title = 'Produto, poupança, depreciação e crescimento populacional',
                     hovermode = 'closest',
                     updatemenus=[dict(type="buttons",
                                     buttons=[dict(label="Play",
@@ -82,17 +82,55 @@ app.layout = html.Div([
                 html.Div([
                     html.H1("Solow-Swan Model")
                         ]),
-                dcc.Input(id='d', type='number', value = d, step=0.05),
-                dcc.Input(id='n', type='number', value = n, step=0.01),
-                dcc.Input(id='s', type='number', value = s, step=0.05),
-                dcc.Input(id='a', type='number', value = a, step=0.05),
+                    html.Div([
+                        html.Div(
+                            html.P('d:'),
+                            style={'display': 'inline-block'}),
+                        html.Div(
+                            dcc.Input(id='d', type='number', value = d, step=0.05),
+                            style={'display': 'inline-block'})],
+                        style={'width': '12.5%', 'display': 'inline-block'}),
+                    html.Div([
+                        html.Div(
+                            html.P('n:'),
+                            style={'display': 'inline-block'}),
+                        html.Div(
+                            dcc.Input(id='n', type='number', value = n, step=0.01),
+                            style={'display': 'inline-block'})],
+                        style={'width': '12.5%', 'display': 'inline-block'}),
+                    html.Div([
+                        html.Div(
+                            html.P('s:'),
+                            style={'display': 'inline-block'}),
+                        html.Div(
+                            dcc.Input(id='s', type='number', value = s, step=0.05),
+                            style={'display': 'inline-block'})],
+                        style={'width': '12.5%', 'display': 'inline-block'}),                                                
+                    html.Div([
+                        html.Div(
+                            html.P('a:'),
+                            style={'display': 'inline-block'}),
+                        html.Div(
+                            dcc.Input(id='a', type='number', value = a, step=0.05),
+                            style={'display': 'inline-block'})],
+                        style={'width': '12.5%', 'display': 'inline-block'}),                    
+                #html.P(':'),
+                #dcc.Input(id='n', type='number', value = n, step=0.01),
+                #dcc.Input(id='s', type='number', value = s, step=0.05),
+                #dcc.Input(id='a', type='number', value = a, step=0.05),
                 # adding a plot
                 html.Div([
-                    dcc.Graph(id = 'plot', figure = fig)
-                        ], style={'width': '48%'}),
-                html.Div([dcc.Graph(id = 'plot2', figure = fig2)],
-                    style={'width': '48%', 'float':'right'})
+                    html.Div([
+                        dcc.Graph(id = 'plot', figure = fig)
+                            ], style={'width': '48%', 'display': 'inline-block'}),
+                    html.Div([dcc.Graph(id = 'plot2', figure = fig2)],
+                        style={'width': '48%', 'float':'right', 'display': 'inline-block'})
+                            ])
                         ])
+
+app.css.append_css({
+    'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
+})
 
     # Step 5. Add callback functions
 @app.callback([Output('plot', 'figure'),
@@ -116,7 +154,15 @@ def update_figure(input1,input2,input3,input4):
                         line = dict(width = 2,
                                     color = 'rgb(229, 151, 50)'))
         
-    layout = go.Layout(title = 'Time Series Plot',
+    layout1 = go.Layout(title = 'Produto, poupança, depreciação e crescimento populacional',
+                    hovermode = 'closest',
+                    updatemenus=[
+                            dict(type="buttons",
+                            buttons=[dict(label="Play",
+                                        method="animate",
+                                        args=[None])])
+                                        ])
+    layout2 = go.Layout(title = 'gk',
                     hovermode = 'closest',
                     updatemenus=[
                             dict(type="buttons",
@@ -127,7 +173,7 @@ def update_figure(input1,input2,input3,input4):
         
     kz = equal
     yz = kz**a
-    gk = s*(kz**(a-1))-d-n
+    gk = (s*(kz**(a-1)))-d-n
 
     i = 0
 
@@ -142,7 +188,7 @@ def update_figure(input1,input2,input3,input4):
     time.columns = ['idx','kz','yz','gk']
 
     fig = go.Figure(data = [trace_1],
-        layout = layout
+        layout = layout1
         )
                 
     trace_2 = go.Scatter(x = time.iloc[1:,0], y = time.iloc[1:,3],
@@ -152,7 +198,7 @@ def update_figure(input1,input2,input3,input4):
 
 
     fig2 = go.Figure(data = [trace_2],
-        layout = layout
+        layout = layout2
         )    
         
     fig.add_trace(go.Scatter(x=k[0], y=s*(k[0]**a),
@@ -194,8 +240,6 @@ def update_figure(input1,input2,input3,input4):
     )
     
     return fig, fig2
-    
-server = app.server
     
     # Step 6. Add the server clause
 if __name__ == '__main__':
