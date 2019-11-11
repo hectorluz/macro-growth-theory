@@ -180,9 +180,9 @@ def update_figure(input1,input2,input3,input4):
     time = pd.DataFrame(np.matrix([0,kz,yz,gk]))
 
     for i in range(0,201):
-        gk = s*(time.iloc[i,0]**(a-1))-d-n
-        kz = time.iloc[i,0] + gk
-        yz = time.iloc[i,0]**a
+        gk = s*(time.iloc[i,1]**(a-1))-d-n
+        kz = time.iloc[i,1] + gk
+        yz = time.iloc[i,1]**a
         time = time.append(pd.DataFrame(np.matrix([i,kz,yz,gk])))
 
     time.columns = ['idx','kz','yz','gk']
